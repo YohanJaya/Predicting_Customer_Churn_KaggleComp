@@ -76,22 +76,6 @@ for col in binCat:
 dfTrain = pd.get_dummies(dfTrain)
 
 
-
-def mi_metric(y, y_pred, **kwargs):
-    # mutual_info_regression expects 2D X
-    y_pred = y_pred.reshape(-1, 1)
-
-    # handle constant predictions (MI fails sometimes)
-    # flatten() >> make 1D array from a high dimension array
-    # set() >> make a set, means takes only the unique values
-    
-    if len(set(y_pred.flatten())) <= 1:
-        return 0
-        
-    mi = mutual_info_regression(y_pred, y)
-    # gplearn maximizes the metric, so return MI
-    return mi[0]
-
 # Initialize SymbolicTransformer with custom metric
 transformer_mi = SymbolicTransformer(
     generations=10,
